@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.inject.Inject;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.audio.AudioPlayer;
 
@@ -48,11 +46,7 @@ class RuneLootSoundPlayer
 		{
 			new AudioPlayer().play(file, (float) config.soundVolume());
 		}
-		catch (UnsupportedAudioFileException e)
-		{
-			log.warn("Rune Loot: '{}' is not a supported audio format. WAV files only.", file.getName());
-		}
-		catch (IOException | LineUnavailableException e)
+		catch (Exception e)
 		{
 			log.warn("Rune Loot: failed to play sound file '{}'", file.getName(), e);
 		}
@@ -70,7 +64,7 @@ class RuneLootSoundPlayer
 			byte[] bytes = is.readAllBytes();
 			new AudioPlayer().play(new ByteArrayInputStream(bytes), (float) config.soundVolume());
 		}
-		catch (IOException | UnsupportedAudioFileException | LineUnavailableException e)
+		catch (Exception e)
 		{
 			log.warn("Rune Loot: failed to play bundled sound", e);
 		}
