@@ -249,7 +249,7 @@ public interface RuneLootConfig extends Config
 	@Range(min = 1, max = 30)
 	default int displayDuration()
 	{
-		return 5;
+		return 3;
 	}
 
 	@ConfigItem(

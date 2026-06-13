@@ -11,18 +11,19 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
-import net.runelite.client.events.NpcLootReceived;
-import net.runelite.client.events.PlayerLootReceived;
-import net.runelite.client.events.ServerNpcLoot;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.ItemStack;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.plugins.loottracker.PluginLootReceived;
+import net.runelite.client.plugins.loottracker.LootReceived;
+import net.runelite.client.plugins.loottracker.LootTrackerPlugin;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.http.api.item.ItemPrice;
+import net.runelite.http.api.loottracker.LootRecordType;
 
 @Slf4j
+@PluginDependency(LootTrackerPlugin.class)
 @PluginDescriptor(
 	name = "Rune Loot",
 	description = "Shows an animated popup for drops at or above a configurable GP value threshold",
@@ -54,44 +55,31 @@ public class RuneLootPlugin extends Plugin
 	}
 
 	@Subscribe
-	public void onNpcLootReceived(NpcLootReceived event)
+	public void onLootReceived(LootReceived event)
 	{
-		if (config.showNpcDrops())
+		switch (event.getType())
 		{
-			checkItems(event.getItems());
+			case NPC:
+			case PICKPOCKET:
+				if (!config.showNpcDrops()) return;
+				break;
+			case PLAYER:
+				if (!config.showPlayerDrops()) return;
+				break;
+			case EVENT:
+			{
+				String name = event.getName().toLowerCase(Locale.ROOT);
+				boolean isRaid = name.contains("chambers") || name.contains("theatre")
+					|| name.contains("tombs") || name.contains("raids");
+				boolean isClue = name.contains("casket") || name.contains("clue");
+				if (isRaid && !config.showRaidLoot()) return;
+				if (isClue && !config.showClueRewards()) return;
+				if (!isRaid && !isClue && !config.showOtherEvents()) return;
+				break;
+			}
+			default:
+				return;
 		}
-	}
-
-	@Subscribe
-	public void onServerNpcLoot(ServerNpcLoot event)
-	{
-		if (config.showNpcDrops())
-		{
-			checkItems(event.getItems());
-		}
-	}
-
-	@Subscribe
-	public void onPlayerLootReceived(PlayerLootReceived event)
-	{
-		if (config.showPlayerDrops())
-		{
-			checkItems(event.getItems());
-		}
-	}
-
-	@Subscribe
-	public void onPluginLootReceived(PluginLootReceived event)
-	{
-		String src = event.getName().toLowerCase(Locale.ROOT);
-		boolean isRaid = src.contains("chambers") || src.contains("theatre")
-			|| src.contains("tombs") || src.contains("raids");
-		boolean isClue = src.contains("casket") || src.contains("clue");
-
-		if (isRaid && !config.showRaidLoot()) return;
-		if (isClue && !config.showClueRewards()) return;
-		if (!isRaid && !isClue && !config.showOtherEvents()) return;
-
 		checkItems(event.getItems());
 	}
 

@@ -11,6 +11,8 @@ Rune Loot brings Collection Log-style notifications to valuable drops. Set a GP 
 
 Install via the RuneLite Plugin Hub. Search for **Rune Loot**, click Install, then enable it with the toggle in the plugin list.
 
+Rune Loot requires the **Loot Tracker** plugin to be enabled. It will be enabled automatically when you turn on Rune Loot.
+
 ## Settings
 
 Click the wrench icon next to Rune Loot in the plugin list to open settings.
@@ -78,7 +80,7 @@ The title shown at the top of the popup.
 
 | Setting | Default | Description |
 |---|---|---|
-| Display Duration (seconds) | 5 | How long the popup stays before closing |
+| Display Duration (seconds) | 3 | How long the popup stays before closing |
 | Show Item Value | On | Show the GP value below the item name |
 | Screenshot on Popup | On | Saves a screenshot when the popup appears, to `.runelite/rune-loot/screenshots/` |
 | Show 'gp' Suffix | On | Append "gp" after the value |
