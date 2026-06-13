@@ -265,11 +265,23 @@ public interface RuneLootConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "showUntradeableValue",
+		name = "Show Untradeable Value",
+		description = "Show the high-alch value for untradeable drops",
+		section = "display",
+		position = 2
+	)
+	default boolean showUntradeableValue()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 		keyName = "screenshotEnabled",
 		name = "Screenshot on Popup",
 		description = "Save a screenshot when the popup fully appears. Saved to .runelite/rune-loot/screenshots/",
 		section = "display",
-		position = 2
+		position = 3
 	)
 	default boolean screenshotEnabled()
 	{
@@ -281,7 +293,7 @@ public interface RuneLootConfig extends Config
 		name = "Show 'gp' Suffix",
 		description = "Append 'gp' after the value",
 		section = "display",
-		position = 3
+		position = 4
 	)
 	default boolean showGpSuffix()
 	{
@@ -293,7 +305,7 @@ public interface RuneLootConfig extends Config
 		name = "Abbreviate Value",
 		description = "Show 15.8M instead of 15,821,990",
 		section = "display",
-		position = 4
+		position = 5
 	)
 	default boolean abbreviateValue()
 	{

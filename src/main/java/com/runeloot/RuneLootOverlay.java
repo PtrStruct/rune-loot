@@ -168,7 +168,7 @@ class RuneLootOverlay extends Overlay
 
 		String title = n.isGeTradeable() ? config.tradeableTitle() : config.untradeableTitle();
 		String name = n.getItemName();
-		String valueText = config.showValue()
+		String valueText = config.showValue() && (n.isGeTradeable() || config.showUntradeableValue())
 			? formatValue(n.getValue()) + (config.showGpSuffix() ? " gp" : "")
 			: null;
 

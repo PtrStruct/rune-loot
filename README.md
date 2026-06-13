@@ -82,6 +82,7 @@ The title shown at the top of the popup.
 |---|---|---|
 | Display Duration (seconds) | 3 | How long the popup stays before closing |
 | Show Item Value | On | Show the GP value below the item name |
+| Show Untradeable Value | On | Show the high-alch value for untradeable drops |
 | Screenshot on Popup | On | Saves a screenshot when the popup appears, to `.runelite/rune-loot/screenshots/` |
 | Show 'gp' Suffix | On | Append "gp" after the value |
 | Abbreviate Value | On | Show `222.3K` instead of `222,300` |
