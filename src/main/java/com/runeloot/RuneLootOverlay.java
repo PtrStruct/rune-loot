@@ -37,8 +37,6 @@ class RuneLootOverlay extends Overlay
 	private static final int PINCH_W = 4;
 	private static final int SLOT_SIZE = 36;
 
-	private static final Color TEXT_COLOR = Color.WHITE;
-
 	private static final DateTimeFormatter SCREENSHOT_TS = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 
 	private enum AnimPhase { ENTER_V, ENTER_H, SHOWING, EXIT_H, EXIT_V }
@@ -276,7 +274,7 @@ class RuneLootOverlay extends Overlay
 		int textX = PADDING + SLOT_SIZE + PADDING;
 		int textY = titleBarH + (contentH - textH) / 2 + fm.getAscent();
 
-		g.setColor(TEXT_COLOR);
+		g.setColor(Color.WHITE);
 		g.drawString(name, textX, textY);
 
 		if (valueText != null)

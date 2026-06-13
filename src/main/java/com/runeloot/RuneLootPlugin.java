@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ItemComposition;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.NpcLootReceived;
 import net.runelite.client.events.PlayerLootReceived;
+import net.runelite.client.events.ServerNpcLoot;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.ItemStack;
 import net.runelite.client.plugins.Plugin;
@@ -55,6 +55,15 @@ public class RuneLootPlugin extends Plugin
 
 	@Subscribe
 	public void onNpcLootReceived(NpcLootReceived event)
+	{
+		if (config.showNpcDrops())
+		{
+			checkItems(event.getItems());
+		}
+	}
+
+	@Subscribe
+	public void onServerNpcLoot(ServerNpcLoot event)
 	{
 		if (config.showNpcDrops())
 		{
@@ -121,7 +130,7 @@ public class RuneLootPlugin extends Plugin
 			id = results.get(0).getId();
 		}
 
-		ItemComposition comp = itemManager.getItemComposition(id);
+		var comp = itemManager.getItemComposition(id);
 		int gePrice = itemManager.getItemPrice(id);
 		boolean geTradeable = comp.isGeTradeable() || gePrice > 0;
 		long value = gePrice > 0 ? gePrice : comp.getHaPrice();
@@ -132,7 +141,7 @@ public class RuneLootPlugin extends Plugin
 	{
 		for (ItemStack item : items)
 		{
-			ItemComposition comp = itemManager.getItemComposition(item.getId());
+			var comp = itemManager.getItemComposition(item.getId());
 			int gePrice = itemManager.getItemPrice(item.getId());
 
 			boolean geTradeable = comp.isGeTradeable() || gePrice > 0;
