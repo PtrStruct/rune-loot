@@ -139,12 +139,11 @@ public class RuneLootPlugin extends Plugin
 			long unitValue = gePrice > 0 ? gePrice : comp.getHaPrice();
 			long totalValue = unitValue * item.getQuantity();
 
-			if (totalValue >= config.valueThreshold())
-			{
-				queueNotification(comp.getName(), totalValue,
-					itemManager.getImage(item.getId(), item.getQuantity(), comp.isStackable()),
-					geTradeable);
-			}
+			if (geTradeable && totalValue < config.valueThreshold()) continue;
+
+			queueNotification(comp.getName(), totalValue,
+				itemManager.getImage(item.getId(), item.getQuantity(), comp.isStackable()),
+				geTradeable);
 		}
 	}
 
