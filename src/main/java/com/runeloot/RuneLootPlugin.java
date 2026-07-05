@@ -130,6 +130,9 @@ public class RuneLootPlugin extends Plugin
 		for (ItemStack item : items)
 		{
 			var comp = itemManager.getItemComposition(item.getId());
+
+			if (isExcluded(comp.getName())) continue;
+
 			int gePrice = itemManager.getItemPrice(item.getId());
 
 			boolean geTradeable = comp.isGeTradeable() || gePrice > 0;
@@ -156,6 +159,19 @@ public class RuneLootPlugin extends Plugin
 	private static String cleanName(String name)
 	{
 		return name.replaceAll("\\s*\\(Members'?\\)", "").trim();
+	}
+
+	private boolean isExcluded(String name)
+	{
+		String excluded = config.excludedItems();
+		if (excluded == null || excluded.isEmpty()) return false;
+
+		String cleaned = cleanName(name);
+		for (String token : excluded.split(","))
+		{
+			if (token.trim().equalsIgnoreCase(cleaned)) return true;
+		}
+		return false;
 	}
 
 	@Provides

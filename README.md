@@ -41,6 +41,7 @@ Pick which loot events trigger the popup.
 |---|---|---|
 | Value Threshold (gp) | 100,000 | Minimum GP value to trigger a popup |
 | Show Untradeable Drops | On | Show untradeable drops regardless of value |
+| Excluded Items | (empty) | Comma-separated item names to never show a popup for, e.g. `Bull bones, Serafina's diary, The butcher` |
 
 <br clear="right">
 

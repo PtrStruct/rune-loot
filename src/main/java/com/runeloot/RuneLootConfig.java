@@ -117,6 +117,18 @@ public interface RuneLootConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "excludedItems",
+		name = "Excluded Items",
+		description = "Comma-separated item names to never show a popup for, e.g. Bull bones, Serafina's diary, The butcher",
+		section = "filter",
+		position = 2
+	)
+	default String excludedItems()
+	{
+		return "";
+	}
+
+	@ConfigItem(
 		keyName = "tradeableTitle",
 		name = "Tradeable Drop Title",
 		description = "Title shown when the drop is GE-tradeable",
